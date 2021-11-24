@@ -80,24 +80,24 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: err.message });
 });
 
-n getEvents(req, res) {
-	    firestore.collection("Events").get()
-	        .then((snapshot) => {
-			            if (!snapshot.empty) {
-					                    const ret = { events: []};
-					                    snapshot.docs.forEach(element => {
-								                        ret.events.push(element.data());
-								                    }, this);
-					                    console.log(ret);
-					                    res.json(ret);
-					                } else {
-								                 res.json(mockEvents);
-								            }
-			        })
-	        .catch((err) => {
-			            console.error('Error getting events', err);
-			            res.json(mockEvents);
-			        });
+function getEvents(req, res) {
+    firestore.collection("Events").get()
+        .then((snapshot) => {
+            if (!snapshot.empty) {
+                const ret = { events: []};
+                snapshot.docs.forEach(element => {
+                    ret.events.push(element.data());
+                }, this);
+                console.log(ret);
+                res.json(ret);
+            } else {
+                 res.json(mockEvents);
+            }
+        })
+        .catch((err) => {
+            console.error('Error getting events', err);
+            res.json(mockEvents);
+        });
 };
 
 const PORT = process.env.PORT ? process.env.PORT : 8082;
